@@ -1,0 +1,165 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>impresion</title>
+	<!-- <link rel="stylesheet" type="text/css" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.1/css/bootstrap.min.css">
+	<script type="text/javascript" src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.1/js/bootstrap.min.js"></script> -->
+	<style type="text/css">
+		body{
+			font-family: Arial, Helvetica, sans-serif;
+			font-size: 15px;
+		}
+		table{
+			width: 800px;
+			border: 1px solid;
+			border-radius: 5px;
+		}
+		td, th{
+			border-radius: 5px;
+		}
+		input{
+			width: 70%;
+			border: none;
+			border-bottom: 1px solid;
+		}
+		label{
+			width: 20%;
+		}
+		.head{
+			text-align: center;
+			background-color: #1685B9;
+			font-weight: bold;
+		}
+		.table2{
+			text-align: center;
+		}
+		.salida{
+			background-color: #B6C615;
+			text-align: center;
+		}
+
+	</style>
+</head>
+<body>
+	<center>
+		<table>
+			<td><img src="RHgroup_LOGO.jpg" style="width: 200px "></td>
+			<tr class="head">
+				<td colspan="2">ENTREGA SALIDAS DE ALMACÉN</td>
+			</tr>
+			<tr class="salida">
+				<td colspan="2">SALIDA #1</td>
+			</tr>
+			<tr>
+				<td><label for="Entrega">Entrega: </label><input style="margin-left: 20px" type="text" name="Entrega"></td>
+				<td></td>
+			</tr>
+			<tr>
+				<td><label for="Recibe">Recibe: </label><input style="margin-left: 27px" type="text" name="Recibe"></td>
+				<td><label for="C.C">Cédula: </label><input style="margin-left: 40px" type="text" name="C.C"></td>
+			</tr>
+			<tr>
+				<td><label for="Placa">Placa: </label><input type="text" style="margin-left: 35px" name="Placa"></td>
+				<td><label for="Dominio">Dominio: </label><input style="margin-left: 33px" type="text" name="Dominio"></td>
+			</tr>
+			<tr>
+				<td><label for="tsalida">Tipo Salida: </label><input style="margin-bottom: 15px" type="text" name="tsalida"></td>
+				<td><label for="fsalida">Fecha Salida: </label><input style="margin-bottom: 15px" type="date" name="fsalida"></td>
+			</tr>
+		</table>
+		<table class="table2" style="margin-top: 5px;">
+			<tr class="head">
+				<td>ID ARTÍCULO</td>
+				<td>DESCRIPCIÓN</td>
+				<td>REFERENCIA</td>
+				<td>CANTIDAD</td>
+				<td>COSTO TOTAL</td>
+			</tr>
+			<tr>
+				<td>123</td>
+				<td>asdf</td>
+				<td>asdf</td>
+				<td>123</td>
+				<td>123</td>
+			</tr>
+			<tr>
+				<td>123</td>
+				<td>asdf</td>
+				<td>asdf</td>
+				<td>123</td>
+				<td>123</td>
+			</tr>
+		</table>
+		<br>
+		<canvas id="democanvas" style="border: 1px solid"></canvas>
+
+	</center>
+
+<script src="https://code.jquery.com/jquery-3.3.1.js"></script>
+<script type="text/javascript">
+ $(document).ready(function(){
+ 	$('input').attr('autocomplete', 'off');
+
+var canvas,
+ctx,
+color="rgba(0,0,0,.2)",
+miPrimerPincelPropiamentePropio={
+    xAnt:0,//Posiciones anteriores
+    yAnt:0,
+
+   init:function(){
+      //Aquí irían las configuraciones no variables 
+      canvas.width=400;
+      canvas.height=300;
+      //grosor de la línea 
+      ctx.lineWidth=1;
+      ctx.strokeStyle=color;
+      ctx.fillStyle=color;
+   },
+
+   dibujo:function (x,y) {
+      //Configuramos xAnt e yAnt
+      if(this.xAnt==0||this.yAnt==0){
+        this.xAnt=x;
+        this.yAnt=y;
+      }
+      //color de la línea y del relleno
+      //(aunque ahora no hay relleno)
+      ctx.beginPath();
+      //nos movemos a la posición actual
+      ctx.moveTo(x,y);
+      //Hacemos una línea a la posición anterior
+      ctx.lineTo(this.xAnt,this.yAnt);
+      //pintamos la línea
+      ctx.stroke();
+      //guardamos los
+      this.xAnt=x;
+      this.yAnt=y;
+   }
+ }
+//cambio de color de prueba
+$('#rojo').bind('click',function(e){
+    ctx.strokeStyle='rgba(255,0,0,.4)';
+    ctx.lineWidth=4
+});
+
+$(function(){//Cogemos canvas y contexto
+   canvas = document.getElementById('democanvas');
+   ctx = canvas.getContext('2d');
+   //iniciamos el pincel
+   miPrimerPincelPropiamentePropio.init();
+
+ $(canvas).bind('mousemove',function(evento){
+    var canvasOffset=$(canvas).offset(),
+    //hallamos la posición: page x-y es con respecto al ratón,
+    //offset con respecto al borde del canvas
+    posX=Math.floor(evento.pageX-canvasOffset.left),
+    posY=Math.floor(evento.pageY-canvasOffset.top);
+    //llamamos a la función de dibujo.
+    miPrimerPincelPropiamentePropio.dibujo(posX,posY)
+  });
+});
+ })
+</script>
+</body>
+</html>
